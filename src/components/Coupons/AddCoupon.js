@@ -4,8 +4,8 @@ import axios from "../../axios/axios"
 class AddCoupon extends Component {
 
 
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.handlePost = this.handlePost.bind(this)
     }
 
@@ -22,6 +22,8 @@ class AddCoupon extends Component {
         },
 
     }
+    baseState = this.state.couponForm;
+
 
 
     handlePost(e) {
@@ -30,8 +32,7 @@ class AddCoupon extends Component {
         axios.post("/postBet", this.state.couponForm)
             .then(res => console.log(res))
             .catch(err => console.log(err))
-
-
+        this.setState(this.baseState)
     }
 
     changeHandler = (e) => {
@@ -78,17 +79,7 @@ class AddCoupon extends Component {
                         <input type="text" value={state} name="state" onChange={this.changeHandler}></input>
                     </div>
                     <div className={classes.btn}>
-                        <button onClick={
-                            (e) => {
-                                e.preventDefault();
-                                console.log(this.state);
-                            }
-                        }
-                        >CLG</button>
-                        <button onClick={
-                            this.handlePost
-                        }
-                        >Add</button>
+                        <button onClick={this.handlePost}>Add</button>
                     </div>
                 </form>
             </div >
