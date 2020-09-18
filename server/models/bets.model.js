@@ -14,13 +14,16 @@ const BetSchema = mongoose.Schema({
             Guess: String,
             Rate: String,
             Commment: String,
-            State: Number
+            MatchState: Number
         }
     ],
     CouponState: Number,
     CouponComment: String,
     CouponRate: Number,
     AddedBy: String,
-    CouponDate: String,
+    CouponDate: {
+        type: Date,
+        default: () => Date.now(),
+    },
 });
 module.exports = mongoose.model("Bets", BetSchema);

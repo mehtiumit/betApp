@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch } from "react-router";
-import AddCoupon from "./components/Coupons/AddCoupon";
-import ShowCoupon from "./components/Coupons/ShowCoupon"
+import AddCoupon from "./components/Coupons/addcoupon/AddCoupon";
+import ShowCoupon from "./components/Coupons/showcoupon/ShowCoupon"
 import Homepage from "./components/Homepage"
 import "./App.css"
 

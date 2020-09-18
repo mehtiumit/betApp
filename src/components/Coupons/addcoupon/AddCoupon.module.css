@@ -1,20 +1,28 @@
-body {
+.body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-size: 16px;
 }
+.formContainer {
+  border: 1px gray;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  margin: 10px 20px 10px;
+}
 .form {
   display: flex;
   flex-direction: column;
-
-  width: 500px;
+  margin: 20px;
+  width: 300px;
+  height: 700px;
 }
 .formElements {
   background-color: white;
   text-align: left;
   margin-left: 5px;
+  align-content: center;
 }
 .formElements label {
   margin-right: 5px;
@@ -38,7 +46,7 @@ body {
   font-family: inherit;
 }
 .btn {
-  margin: 5px;
+  margin: 100px 40px;
   display: flex;
   align-self: center;
 }
@@ -48,8 +56,13 @@ body {
   text-align: center;
   height: 42px;
   width: 100px;
+  margin-left: 5px;
   outline: 0;
   border: 0;
   color: white;
   background-color: rgb(68, 176, 255);
+}
+
+.formName {
+  text-align: center;
 }
