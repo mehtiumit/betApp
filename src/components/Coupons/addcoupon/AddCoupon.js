@@ -107,6 +107,10 @@ class AddCoupon extends Component {
                                 <div className={classes.btn}>
                                     <button onClick={this.handlePost}>Add</button>
                                     <button onClick={this.handleClear}>Clear Form</button>
+                                    <button onClick={(e) => {
+                                        e.preventDefault();
+                                        console.log(this.state)
+                                    }}>Clg</button>
                                 </div>
                             </form>
                         </div>

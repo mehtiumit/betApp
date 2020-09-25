@@ -13,7 +13,7 @@ const BetSchema = mongoose.Schema({
             SecondTeam: String,
             Guess: String,
             Rate: String,
-            Commment: String,
+            Comment: String,
             MatchState: Number
         }
     ],

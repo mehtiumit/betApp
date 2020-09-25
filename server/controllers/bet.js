@@ -17,17 +17,17 @@ exports.postBet = ((req, res, next) => {
     let SecondTeam = req.body.secondTeam;
     let Guess = req.body.guess;
     let Rate = req.body.rate;
-    let Commment = req.body.commment;
+    let Comment = req.body.comment;
     let MatchState = req.body.matchState;
     let CouponState = req.body.couponState;
     let CouponComment = req.body.couponComment;
     let CouponRate = req.body.couponRate;
     let AddedBy = req.body.addedBy;
-  
 
 
 
-        console.log("*****************");
+
+    console.log("*****************");
 
     const newCoupon = new Bet({
 
@@ -39,7 +39,7 @@ exports.postBet = ((req, res, next) => {
             SecondTeam,
             Guess,
             Rate,
-            Commment,
+            Comment,
             MatchState,
         }],
         CouponState,
