@@ -1,16 +1,10 @@
-import React, { useState, useEffect, Fragment } from "react";
-import axios from "../../../axios/axios";
+import React, { useEffect, Fragment, useLayoutEffect } from "react";
+import { connect } from "react-redux";
+import * as matchActions from "../../../redux/actions/matchActions";
 
-const ShowCoupon = (props) => {
-  const [coupon, setCoupon] = useState([]);
+const ShowCoupon = ({ matchs, getMatchs }) => {
   useEffect(() => {
-    async function fetchData() {
-      await axios.get("/getBet").then((res) => {
-        setCoupon(res.data);
-        console.log(res);
-      });
-    }
-    fetchData();
+    getMatchs();
   }, []);
   return (
     <div>
@@ -37,7 +31,7 @@ const ShowCoupon = (props) => {
               </tr>
             </thead>
             <tbody>
-              {coupon.map((item, index) => (
+              {matchs.map((item, index) => (
                 <Fragment key={index}>
                   <tr>
                     {item.Coupon.map((td, index) => (
@@ -78,4 +72,14 @@ const ShowCoupon = (props) => {
   );
 };
 
-export default ShowCoupon;
+const mapStateToProps = (state) => {
+  return {
+    matchs: state.getMatchReducer.matchs,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { getMatchs: () => dispatch(matchActions.getMatchs()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShowCoupon);
