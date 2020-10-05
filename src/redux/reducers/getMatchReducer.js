@@ -6,8 +6,6 @@ export const initalState = {
 
 export default function addMatchReducer(state = initalState, action) {
   switch (action.type) {
-    case actionTypes.ADD_MATCH:
-      break;
     case actionTypes.GET_MATCH_SUCCESS:
       return {
         ...state,

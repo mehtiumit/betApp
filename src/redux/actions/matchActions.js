@@ -25,10 +25,3 @@ export function addMatchSuccess(match) {
   return { type: actionTypes.ADD_MATCH, payload: match };
 }
 
-export function addMatches(match) {
-  return (dispatch) => {
-    return axios
-      .post("/postBet", match)
-      .then((res) => dispatch(addMatchSuccess(res.data)));
-  };
-}

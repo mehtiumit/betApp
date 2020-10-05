@@ -5,6 +5,31 @@ exports.getBet = (req, res, next) => {
     .then((bet) => res.json(bet))
     .catch((err) => res.status(400).json("Error:" + err));
 };
+
+exports.deleteBet = (req, res, next) => {
+  Bet.findOne({ _id: req.params.id }).then((bet) => {
+    if (!bet) {
+      return res.json({ err: "Data not found" });
+    } else {
+      Bet.deleteOne({ _id: req.params.id }).then((res) => {
+        console.log("Data Silindi");
+      });
+    }
+  });
+};
+
+exports.updateBet = (req, res, next) => {
+  Bet.findOne({ _id: req.params.id }).then((bet) => {
+    if (!bet) {
+      return res.json({ err: "Data not found" });
+    } else {
+      bet.Coupon[0].League = req.body.League;
+      console.log(req.body.League);
+      return bet.save();
+    }
+  });
+};
+
 exports.postBet = (req, res, next) => {
   let League = req.body.league;
   let Date = req.body.date;
@@ -23,14 +48,16 @@ exports.postBet = (req, res, next) => {
 
   const newCoupon = new Bet({
     Coupon: [
-      League,
-      Date,
-      FirstTeam,
-      SecondTeam,
-      Guess,
-      Rate,
-      Comment,
-      MatchState,
+      {
+        League,
+        Date,
+        FirstTeam,
+        SecondTeam,
+        Guess,
+        Rate,
+        Comment,
+        MatchState,
+      },
     ],
     CouponState,
     CouponComment,
