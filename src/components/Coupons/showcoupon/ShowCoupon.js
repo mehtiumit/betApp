@@ -2,10 +2,14 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import * as matchActions from "../../../redux/actions/matchActions";
 
-const ShowCoupon = ({ matchs, getMatchs }) => {
+const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
   useEffect(() => {
     getMatchs();
   }, []);
+
+  const handleDelete = (id) => {
+    deleteMatch(id);
+  };
   return (
     <div>
       <div>
@@ -31,11 +35,11 @@ const ShowCoupon = ({ matchs, getMatchs }) => {
               </tr>
             </thead>
             <tbody>
-              {matchs.map((item, index) => (
-                <Fragment key={index}>
+              {matchs.map((item) => (
+                <Fragment key={item._id}>
                   <tr>
-                    {item.Coupon.map((td, index) => (
-                      <Fragment key={index}>
+                    {item.Coupon.map((td) => (
+                      <Fragment key={td._id}>
                         <td>{td.League}</td>
                         <td>{td.Date}</td>
                         <td>{td.FirstTeam}</td>
@@ -52,7 +56,10 @@ const ShowCoupon = ({ matchs, getMatchs }) => {
                     <td>{item.AddedBy}</td>
                     <td>{item.CouponDate}</td>
                     <td>
-                      <button className="btn btn-outline-danger btn-sm">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="btn btn-outline-danger btn-sm"
+                      >
                         Sil
                       </button>
                     </td>
@@ -79,7 +86,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { getMatchs: () => dispatch(matchActions.getMatchs()) };
+  return {
+    getMatchs: () => dispatch(matchActions.getMatchs()),
+    deleteMatch: (matchId) => dispatch(matchActions.deleteMatchs(matchId)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowCoupon);

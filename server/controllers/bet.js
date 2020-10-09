@@ -12,7 +12,7 @@ exports.deleteBet = (req, res, next) => {
       return res.json({ err: "Data not found" });
     } else {
       Bet.deleteOne({ _id: req.params.id }).then((res) => {
-        console.log("Data Silindi");
+        console.log("Data Deleted");
       });
     }
   });

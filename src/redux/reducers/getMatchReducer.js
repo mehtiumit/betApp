@@ -9,9 +9,13 @@ export default function addMatchReducer(state = initalState, action) {
     case actionTypes.GET_MATCH_SUCCESS:
       return {
         ...state,
-        matchs: state.matchs.concat(action.payload),
+        matchs: action.payload,
       };
-
+    case actionTypes.DELETE_MATCH_SUCCESS:
+      return {
+        ...state,
+        matchs: state.matchs.filter((matchId) => matchId._id !== action._id),
+      };
     default:
       return state;
   }
