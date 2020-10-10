@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import * as matchActions from "../../../redux/actions/matchActions";
+import UpdateMatch from "../updateMatch/UpdateMatch";
 
 const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
   useEffect(() => {
@@ -10,6 +11,8 @@ const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
   const handleDelete = (id) => {
     deleteMatch(id);
   };
+  const [modalShow, setModalShow] = React.useState(false);
+  const [matchId, setMatchId] = React.useState("");
   return (
     <div>
       <div>
@@ -35,7 +38,7 @@ const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
               </tr>
             </thead>
             <tbody>
-              {matchs.map((item) => (
+              {matchs.map((item, index) => (
                 <Fragment key={item._id}>
                   <tr>
                     {item.Coupon.map((td) => (
@@ -60,12 +63,18 @@ const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
                         onClick={() => handleDelete(item._id)}
                         className="btn btn-outline-danger btn-sm"
                       >
-                        Sil
+                        Delete
                       </button>
                     </td>
                     <td>
-                      <button className="btn btn-outline-primary btn-sm">
-                        Güncelle
+                      <button
+                        onClick={() => {
+                          setModalShow(true);
+                          setMatchId(item._id);
+                        }}
+                        className="btn btn-outline-primary btn-sm"
+                      >
+                        Update
                       </button>
                     </td>
                   </tr>
@@ -75,6 +84,13 @@ const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
           </table>
         </div>
       </div>
+      {modalShow ? (
+        <UpdateMatch
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          matchid={matchId}
+        ></UpdateMatch>
+      ) : null}
     </div>
   );
 };

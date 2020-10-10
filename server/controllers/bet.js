@@ -30,6 +30,12 @@ exports.updateBet = (req, res, next) => {
   });
 };
 
+exports.getBetById = (req, res, next) => {
+  Bet.find({ _id: req.params.id })
+    .then((bet) => res.json(bet))
+    .catch((err) => res.status(400).json("Error:" + err));
+};
+
 exports.postBet = (req, res, next) => {
   let League = req.body.league;
   let Date = req.body.date;

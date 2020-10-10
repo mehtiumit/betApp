@@ -6,5 +6,6 @@ routes.post("/postBet", Bet.postBet);
 routes.get("/getBet", Bet.getBet);
 routes.delete("/deleteBet/:id", Bet.deleteBet);
 routes.put("/updateBet/:id", Bet.updateBet);
+routes.get("/getBetById/:id", Bet.getBetById);
 
 module.exports = routes;

@@ -40,6 +40,10 @@ export function deleteMatchSuccess(matchId) {
   return { type: actionTypes.DELETE_MATCH_SUCCESS, payload: matchId };
 }
 
+export function getMatchByIdSuccess(match) {
+  return { type: actionTypes.GET_MATCH_BY_ID, payload: match };
+}
+
 export function getMatchs() {
   return async (dispatch) => {
     return await axios.get("/getBet").then((res) => {
@@ -49,6 +53,16 @@ export function getMatchs() {
     });
   };
 }
+
+export function getMatchById(matchId) {
+  return async (dispatch) => {
+    return await axios.get(`/getBetById/${matchId}`).then((res) => {
+      console.log("Single Match", res.data);
+      dispatch(getMatchByIdSuccess(res.data));
+    });
+  };
+}
+
 export function postMatchSuccess(postData) {
   return async (dispatch) => {
     await axios.post("/postBet", postData).then((data) => {
