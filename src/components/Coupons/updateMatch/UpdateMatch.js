@@ -1,13 +1,22 @@
 import React, { useEffect, Fragment } from "react";
 import { Modal, Container, Col, Row, Button } from "react-bootstrap";
 import * as matchActions from "../../../redux/actions/matchActions";
-import axios from "../../../axios/axios";
 import { connect } from "react-redux";
 
-const UpdateMatch = ({ match, getMatch, ...props }) => {
+const UpdateMatch = ({ match, getMatch, postMatch, ...props }) => {
   useEffect(() => {
     getMatch(props.matchid);
   }, []);
+
+  const [postData, setPostData] = React.useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPostData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
@@ -27,18 +36,18 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <label>League</label>
                       <input
                         type="text"
-                        defaultValue={ci.League}
                         className="form-control"
-                        id="League"
+                        name="League"
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col xs={6} md={4}>
                       <label>Date</label>
                       <input
-                        type="text"
-                        defaultValue={ci.Date}
+                        type="Date"
                         className="form-control"
-                        id="Date"
+                        onChange={handleChange}
+                        name="Date"
                       />
                     </Col>
                     <Col xs={6} md={4}>
@@ -46,8 +55,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <input
                         type="text"
                         className="form-control"
-                        id="FirstTeam"
-                        defaultValue={ci.FirstTeam}
+                        name="FirstTeam"
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col xs={6} md={4}>
@@ -55,8 +64,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <input
                         type="text"
                         className="form-control"
-                        id="SecondTeam"
-                        defaultValue={ci.SecondTeam}
+                        name="SecondTeam"
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col xs={6} md={4}>
@@ -64,17 +73,17 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <input
                         type="text"
                         className="form-control"
-                        defaultValue={ci.Guess}
-                        id="Guess"
+                        name="Guess"
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col xs={6} md={4}>
                       <label>Rate</label>
                       <input
                         type="text"
-                        defaultValue={ci.Rate}
                         className="form-control"
-                        id="Rate"
+                        onChange={handleChange}
+                        name="Rate"
                       />
                     </Col>
                     <Col xs={6} md={4}>
@@ -82,7 +91,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <input
                         type="text"
                         className="form-control"
-                        defaultValue={ci.Comment}
+                        name="Comment"
+                        onChange={handleChange}
                       />
                     </Col>
                     <Col xs={6} md={4}>
@@ -90,7 +100,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                       <input
                         type="text"
                         className="form-control"
-                        defaultValue={ci.MatchState}
+                        name="MatchState"
+                        onChange={handleChange}
                       />
                     </Col>
                   </Fragment>
@@ -100,7 +111,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={item.CouponState}
+                    name="CouponState"
+                    onChange={handleChange}
                   />
                 </Col>
                 <Col xs={6} md={4}>
@@ -108,7 +120,9 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={item.CouponComment}
+                    value={item.CouponComment}
+                    onChange={handleChange}
+                    name="CouponComment"
                   />
                 </Col>
                 <Col xs={6} md={4}>
@@ -116,15 +130,18 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={item.CouponRate}
+                    name="CouponRate"
+                    onChange={handleChange}
                   />
                 </Col>
                 <Col xs={6} md={4}>
-                  <label>Coupon State</label>
+                  <label>Added By</label>
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={item.AddedBy}
+                    name="AddedBy"
+                    defaultValue={match.AddedBy}
+                    onChange={handleChange}
                   />
                 </Col>
               </Fragment>
@@ -139,7 +156,11 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
         <Button
           variant="success"
           onClick={() => {
-            console.log(match);
+            console.log("match data", match);
+            setPostData(match);
+            console.log("Post Data", postData);
+
+            postMatch(props.matchid, postData);
           }}
         >
           Update Data
@@ -151,6 +172,8 @@ const UpdateMatch = ({ match, getMatch, ...props }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMatch: (matchId) => dispatch(matchActions.getMatchById(matchId)),
+    postMatch: (matchId, postData) =>
+      dispatch(matchActions.updateMatch(matchId, postData)),
   };
 };
 const mapStateToProps = (state) => {

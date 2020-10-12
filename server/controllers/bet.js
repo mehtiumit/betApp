@@ -10,11 +10,10 @@ exports.deleteBet = (req, res, next) => {
   Bet.findOne({ _id: req.params.id }).then((bet) => {
     if (!bet) {
       return res.json({ err: "Data not found" });
-    } else {
-      Bet.deleteOne({ _id: req.params.id }).then((res) => {
-        console.log("Data Deleted");
-      });
     }
+    Bet.deleteOne({ _id: req.params.id }).then(() => {
+      return res.json({ msg: "Data Silindi" });
+    });
   });
 };
 
@@ -23,9 +22,22 @@ exports.updateBet = (req, res, next) => {
     if (!bet) {
       return res.json({ err: "Data not found" });
     } else {
+      bet.CouponState = req.body.CouponState;
+      bet.CouponComment = req.body.CouponComment;
+      bet.CouponRate = req.body.CouponRate;
+      bet.AddedBy = req.body.AddedBy;
       bet.Coupon[0].League = req.body.League;
+      bet.Coupon[0].Date = req.body.Date;
+      bet.Coupon[0].FirstTeam = req.body.FirstTeam;
+      bet.Coupon[0].SecondTeam = req.body.SecondTeam;
+      bet.Coupon[0].Guess = req.body.Guess;
+      bet.Coupon[0].Rate = req.body.Rate;
+      bet.Coupon[0].Comment = req.body.Comment;
+      bet.Coupon[0].MatchState = req.body.MatchState;
       console.log(req.body.League);
-      return bet.save();
+      return bet.save().then((bet) => {
+        return res.json({ msg: bet });
+      });
     }
   });
 };

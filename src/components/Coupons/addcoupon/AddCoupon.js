@@ -191,9 +191,9 @@ class AddCoupon extends Component {
   }
 }
 
-const mapStateToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     postData: (postData) => dispatch(matchActions.postMatchSuccess(postData)),
   };
 };
-export default connect(null, mapStateToProps)(AddCoupon);
+export default connect(null, mapDispatchToProps)(AddCoupon);

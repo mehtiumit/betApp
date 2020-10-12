@@ -5,12 +5,12 @@ import { store } from "react-notifications-component";
 const notificationInfo = (
   notificationTitle,
   notificationMessage,
-  noitificationType
+  notificationType
 ) =>
   store.addNotification({
     title: `${notificationTitle}`,
     message: `${notificationMessage}`,
-    type: `${noitificationType}`,
+    type: `${notificationType}`,
     insert: "bottom",
     container: "bottom-right",
     animationIn: ["animated", "fadeIn"],
@@ -44,6 +44,19 @@ export function getMatchByIdSuccess(match) {
   return { type: actionTypes.GET_MATCH_BY_ID, payload: match };
 }
 
+export function updateMatchSuccess(match) {
+  return { type: actionTypes.UPDATE_MATCH, payload: match };
+}
+
+export function updateMatch(matchId, postData) {
+  return async (dispatch) => {
+    console.log("Dispatch Öncesi");
+    await axios.post(`/updateBet/${matchId}`, postData).then((res) => {
+      dispatch(updateMatchSuccess(res.data));
+      notificationInfo("Success", "Data Updated Successfully", "info");
+    });
+  };
+}
 export function getMatchs() {
   return async (dispatch) => {
     return await axios.get("/getBet").then((res) => {
@@ -66,7 +79,7 @@ export function getMatchById(matchId) {
 export function postMatchSuccess(postData) {
   return async (dispatch) => {
     await axios.post("/postBet", postData).then((data) => {
-      dispatch(addMatchSuccess(data));
+      dispatch(addMatchSuccess(data.data));
       notificationInfo(
         "Success",
         "Match successfuly added to your coupon",
@@ -77,9 +90,10 @@ export function postMatchSuccess(postData) {
 }
 export function deleteMatchs(matchId) {
   return async (dispatch) => {
-    await axios.delete(`/deleteBet/${matchId}`).then((data) => {
-      dispatch(deleteMatchSuccess(data));
+    await axios.delete(`/deleteBet/${matchId}`).then((res) => {
+      console.log("Data deleted");
       notificationInfo("Info", "Match deleted successfuly", "info");
+      dispatch(deleteMatchSuccess(res.data));
     });
   };
 }

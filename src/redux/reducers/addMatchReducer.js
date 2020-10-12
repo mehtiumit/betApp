@@ -11,7 +11,6 @@ export default function addMatchReducer(state = initialState, action) {
         ...state,
         postData: action.payload,
       };
-
     default:
       return state;
   }

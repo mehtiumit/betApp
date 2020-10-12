@@ -22,6 +22,14 @@ export default function getMatchReducer(state = initalState, action) {
         ...state,
         singleMatch: action.payload,
       };
+    case actionTypes.UPDATE_MATCH:
+      console.log("Action.payload", action.payload);
+      return {
+        ...state,
+        matchs: state.matchs.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        ),
+      };
     default:
       return state;
   }
