@@ -3,7 +3,7 @@ import { Modal, Container, Col, Row, Button } from "react-bootstrap";
 import * as matchActions from "../../../redux/actions/matchActions";
 import { connect } from "react-redux";
 
-const UpdateMatch = ({ match, getMatch, postMatch, ...props }) => {
+const UpdateMatch = ({ match, getMatch, postMatch, getMatchs, ...props }) => {
   useEffect(() => {
     getMatch(props.matchid);
   }, []);
@@ -16,6 +16,13 @@ const UpdateMatch = ({ match, getMatch, postMatch, ...props }) => {
       ...prevState,
       [name]: value,
     }));
+  };
+  const handleUpdate = () => {
+    console.log("match data", match);
+    setPostData(match);
+    console.log("Post Data", postData);
+    postMatch(props.matchid, postData);
+    props.onHide();
   };
 
   return (
@@ -156,11 +163,7 @@ const UpdateMatch = ({ match, getMatch, postMatch, ...props }) => {
         <Button
           variant="success"
           onClick={() => {
-            console.log("match data", match);
-            setPostData(match);
-            console.log("Post Data", postData);
-
-            postMatch(props.matchid, postData);
+            handleUpdate();
           }}
         >
           Update Data
@@ -174,6 +177,7 @@ const mapDispatchToProps = (dispatch) => {
     getMatch: (matchId) => dispatch(matchActions.getMatchById(matchId)),
     postMatch: (matchId, postData) =>
       dispatch(matchActions.updateMatch(matchId, postData)),
+    getMatchs: () => dispatch(matchActions.getMatchs()),
   };
 };
 const mapStateToProps = (state) => {

@@ -50,7 +50,6 @@ export function updateMatchSuccess(match) {
 
 export function updateMatch(matchId, postData) {
   return async (dispatch) => {
-    console.log("Dispatch Öncesi");
     await axios.post(`/updateBet/${matchId}`, postData).then((res) => {
       dispatch(updateMatchSuccess(res.data));
       notificationInfo("Success", "Data Updated Successfully", "info");
@@ -91,8 +90,7 @@ export function postMatchSuccess(postData) {
 export function deleteMatchs(matchId) {
   return async (dispatch) => {
     await axios.delete(`/deleteBet/${matchId}`).then((res) => {
-      console.log("Data deleted");
-      notificationInfo("Info", "Match deleted successfuly", "info");
+      notificationInfo("Info", "Match deleted successfuly", "danger");
       dispatch(deleteMatchSuccess(res.data));
     });
   };

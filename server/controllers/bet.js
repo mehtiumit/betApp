@@ -6,15 +6,19 @@ exports.getBet = (req, res, next) => {
     .catch((err) => res.status(400).json("Error:" + err));
 };
 
-exports.deleteBet = (req, res, next) => {
-  Bet.findOne({ _id: req.params.id }).then((bet) => {
-    if (!bet) {
-      return res.json({ err: "Data not found" });
-    }
-    Bet.deleteOne({ _id: req.params.id }).then(() => {
-      return res.json({ msg: "Data Silindi" });
-    });
-  });
+// exports.deleteBet = (req, res, next) => {
+//   Bet.findOne({ _id: req.params.id }).then((bet) => {
+//     if (!bet) {
+//       return res.json({ err: "Data not found" });
+//     }
+//     Bet.deleteOne({ _id: req.params.id }).then(() => {
+//       return res.json({ msg: "Data Silindi" });
+//     });
+//   });
+// };
+
+exports.deleteBet = (req, res) => {
+  Bet.findByIdAndDelete(req.params.id).then(() => res.json(req.params.id));
 };
 
 exports.updateBet = (req, res, next) => {
@@ -36,7 +40,8 @@ exports.updateBet = (req, res, next) => {
       bet.Coupon[0].MatchState = req.body.MatchState;
       console.log(req.body.League);
       return bet.save().then((bet) => {
-        return res.json({ msg: bet });
+        // match will be a payload you can access with action.payload.match
+        return res.json({ match: bet });
       });
     }
   });
