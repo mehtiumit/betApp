@@ -5,13 +5,11 @@ import UpdateMatch from "../updateMatch/UpdateMatch";
 
 const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
   useEffect(() => {
-    console.log("Match", matchs);
     getMatchs();
   }, []);
 
   const handleDelete = (id) => {
     deleteMatch(id);
-    console.log("Matchrdwqudqw", matchs);
   };
   const [modalShow, setModalShow] = React.useState(false);
   const [matchId, setMatchId] = React.useState("");
@@ -100,6 +98,7 @@ const ShowCoupon = ({ matchs, getMatchs, deleteMatch }) => {
 const mapStateToProps = (state) => {
   return {
     matchs: state.getMatchReducer.matchs,
+    match: state.getMatchReducer.singleMatch,
   };
 };
 
@@ -107,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getMatchs: () => dispatch(matchActions.getMatchs()),
     deleteMatch: (matchId) => dispatch(matchActions.deleteMatchs(matchId)),
+    getMatch: (matchId) => dispatch(matchActions.getMatchById(matchId)),
   };
 };
 

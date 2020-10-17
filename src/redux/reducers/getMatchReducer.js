@@ -3,7 +3,6 @@ import * as actionTypes from "../actions/actionTypes";
 export const initalState = {
   matchs: [],
   singleMatch: [],
-  default: false,
 };
 
 export default function getMatchReducer(state = initalState, action) {
@@ -35,7 +34,6 @@ export default function getMatchReducer(state = initalState, action) {
           item._id === action.payload.match._id ? action.payload.match : item
         ),
       };
-
     default:
       return state;
   }
